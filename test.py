@@ -1,10 +1,20 @@
-"""Run a basic spaCy demo."""
+"""Test the spaCy tool."""
 
-import spacy
+from spacy.en import English
+from proselint.tools import create_nlp
 
-nlp = spacy.en.English()
-doc = nlp(u'Time flies like an arrow.')
 
-print(doc)
+def test_spacy():
+    """Test spaCy as a standalone package."""
+    nlp = English()
+    doc = nlp(u'Time flies like an arrow.')
+    token = doc[0]
+    assert token.orth_ == u"Time"
 
-assert True
+
+def test_spacy_tool():
+    """Test spaCy as a Proselint tool."""
+    nlp = create_nlp()
+    doc = nlp(u"Man bites dog.")
+    token = doc[0]
+    assert token.orth_ == u"Man"
